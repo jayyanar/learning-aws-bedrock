@@ -8,3 +8,5 @@ https://www.dataopslabs.com/p/aws-bedrock-learning-series-blog
 https://www.dataopslabs.com/p/family-of-titan-text-models-cli-demo
 
 ## Blog 3
+https://www.dataopslabs.com/p/family-of-titan-text-models-boto3
+
