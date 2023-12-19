@@ -1,0 +1,40 @@
+{
+    "schemaType": "ModelInvocationLog",
+    "schemaVersion": "1.0",
+    "timestamp": "2023-12-18T17:51:40Z",
+    "accountId": "************",
+    "identity": {
+        "arn": "arn:aws:sts::*********:assumed-role/simple-bedrock-lambda-app-HelloWorldFunctionRole-cXBQrV5s9xlG/simple-bedrock-lambda-app-HelloWorldFunction-gfb5mYNbhfDu"
+    },
+    "region": "us-east-1",
+    "requestId": "5c797cbe-aab0-4b21-b8d7-f11417733c7b",
+    "operation": "InvokeModel",
+    "modelId": "amazon.titan-text-lite-v1",
+    "input": {
+        "inputContentType": "application/json",
+        "inputBodyJson": {
+            "inputText": "2 difference between AWS DynamoDB and AWS Redis",
+            "textGenerationConfig": {
+                "maxTokenCount": 128,
+                "stopSequences": [],
+                "temperature": 0,
+                "topP": 0.9
+            }
+        },
+        "inputTokenCount": 11
+    },
+    "output": {
+        "outputContentType": "application/json",
+        "outputBodyJson": {
+            "inputTextTokenCount": 11,
+            "results": [
+                {
+                    "tokenCount": 87,
+                    "outputText": "\nAmazon DynamoDB is a fully managed NoSQL database service in the cloud that offers fast and predictable performance with seamless scalability. It is designed to run high-performance applications at any scale. On the other hand, Amazon Redis is a fully managed in-memory data structure store that provides real-time analytics, caching, and key-value data storage. It is suitable for applications that require fast data retrieval and low latency.",
+                    "completionReason": "FINISH"
+                }
+            ]
+        },
+        "outputTokenCount": 87
+    }
+}
