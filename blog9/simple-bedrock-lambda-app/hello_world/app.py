@@ -8,6 +8,8 @@ bedrock_runtime = boto3.client(
 )
 
 def lambda_handler(event, context):
+    
+    # PROVIDE your prompt here
     lite_prompt = "2 difference between AWS DynamoDB and AWS Redis"
 
     body = json.dumps({
@@ -19,39 +21,21 @@ def lambda_handler(event, context):
             "topP": 0.9
         }
     })
-
-    try:
-        # The actual call to retrieve a response from the model
-        response = bedrock_runtime.invoke_model(
-            body=body,
-            modelId="amazon.titan-text-lite-v1",  # Replace with your model ID
-            accept='application/json',
-            contentType='application/json'
+    # The actual call to retrieve a response from the model
+    response = bedrock_runtime.invoke_model(
+        body=body,
+        modelId="amazon.titan-text-lite-v1",  # Replace with your model ID
+        accept='application/json',
+        contentType='application/json'
         )
-
-        response_body = json.loads(response['Payload'].read().decode('utf-8'))
-
-        # Check if the response has the expected structure
-        if 'results' in response_body and response_body['results']:
-            outputText = response_body['results'][0].get('outputText', '')
-            
-            return {
-                'statusCode': 200,
-                'headers': {
-                    'Access-Control-Allow-Headers': '*',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-                },
-                'body': outputText
-            }
-        else:
-            return {
-                'statusCode': 500,
-                'body': json.dumps({"error": "Invalid Bedrock model response format"})
-            }
-
-    except Exception as e:
-        return {
-            'statusCode': 500,
-            'body': json.dumps({"error": str(e)})
-        }
+    
+    response_body = json.loads(response.get('body').read())
+    response_text = response_body.get('results')[0].get('outputText')
+    parse_text = response_text[response_text.index('\n')+1:]
+    model_completion = parse_text.strip()
+    
+    #  This code will send a respone of Text Completion with stats
+    return {
+        'statusCode': 200,
+        'body': json.dumps(model_completion)
+    }

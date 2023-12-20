@@ -7,7 +7,7 @@ Description: 'simple-bedrock-lambda-app
   '
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 30
     LoggingConfig:
       LogFormat: JSON
 Resources:
@@ -19,6 +19,12 @@ Resources:
       Runtime: python3.12
       Architectures:
       - x86_64
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /hello_bedrock
+            Method: get
       Layers:
       - Fn::GetAtt:
         - AwsSamAutoDependencyLayerNestedStack
@@ -33,6 +39,10 @@ Resources:
       TemplateURL: /Users/jayyanar/Documents/GitHub/learning-aws-bedrock/blog9/simple-bedrock-lambda-app/.aws-sam/auto-dependency-layer/adl_nested_template.yaml
     Type: AWS::CloudFormation::Stack
 Outputs:
+  HelloWorldApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello_bedrock/
   HelloWorldFunction:
     Description: Hello World Lambda Function ARN
     Value:
